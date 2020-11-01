@@ -7,17 +7,48 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestPrefixToPostfix(t *testing.T) {
-	res, err := PrefixToPostfix("+ 5 * - 4 2 3")
-	if assert.Nil(t, err) {
-		assert.Equal(t, "4 2 - 3 * 5 +", res)
-	}
+func TestEvaluatePostfixFormIncorrect(t *testing.T) {
+
+	_, err := EvaluatePostfix("")
+	assert.NotNil(t, err)
+
+	_, err = EvaluatePostfix("dsad")
+	assert.NotNil(t, err)
+
+	_, err = EvaluatePostfix("2 ** 2")
+	assert.NotNil(t, err)
+
 }
 
-func ExamplePrefixToPostfix() {
-	res, _ := PrefixToPostfix("+ 2 2")
+func TestEvaluatePostfixFormCorrect(t *testing.T) {
+
+	res, err := EvaluatePostfix("1488 2 +")
+	if assert.Nil(t, err) {
+		assert.Equal(t, 1490, res)
+	}
+
+	res, err = EvaluatePostfix("1337 3 ^ 5 +")
+	if assert.Nil(t, err) {
+		assert.Equal(t, 2389979758, res)
+	}
+
+	res, err = EvaluatePostfix("228 3 - 5 + 5 /")
+	if assert.Nil(t, err) {
+		assert.Equal(t, 46, res)
+	}
+
+	res, err = EvaluatePostfix("47 3 + 23 - 3 * 2 ^ 3 / 255 -")
+	if assert.Nil(t, err) {
+		assert.Equal(t, 1932, res)
+	}
+
+}
+
+func ExamplePostfixEvaluate() {
+
+	res, _ := EvaluatePostfix("2 3 +")
 	fmt.Println(res)
 
 	// Output:
-	// 2 2 +
+	// 5
 }
