@@ -1,5 +1,4 @@
-// TODO: Rename to your own module.
-module github.com/roman-mazur/architecture-lab-2
+module github.com/KPI-KMD/Labochka_2
 
 go 1.15
 
