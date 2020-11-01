@@ -44,7 +44,7 @@ func TestEvaluatePostfixFormCorrect(t *testing.T) {
 
 }
 
-func ExamplePostfixEvaluate() {
+func ExampleEvaluatePostfix() {
 
 	res, _ := EvaluatePostfix("2 3 +")
 	fmt.Println(res)
