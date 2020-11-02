@@ -23,8 +23,8 @@ func (ch *ComputeHandler) Compute() error {
 			fmt.Println(string(p[:n]))
 			break
 		    }
-		    fmt.Println(err)
-		    os.Exit(1)
+		    fmt.Println("Error", err)
+			return err;
 		}
 		expression += string(p[:n])
 	}
@@ -32,6 +32,7 @@ func (ch *ComputeHandler) Compute() error {
 	res, err := EvaluatePostfix(expression)
 	if err != nil {
 		fmt.Println("ERROR: ", err)
+		return err;
 	}
 
 	if ch.Output == nil {
