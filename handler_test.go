@@ -16,7 +16,7 @@ func (o *outputTest) Write(p []byte) (n int, err error) {
 	return 0, nil
 }
 
-func ExampleComputerHandleCorrect(t *testing.T) {
+func TestComputerHandleCorrect(t *testing.T) {
 	expression := "4 2 - 3 * 5 +"
 	firstTest := strings.NewReader(expression)
 	output := outputTest{}
@@ -30,7 +30,7 @@ func ExampleComputerHandleCorrect(t *testing.T) {
 	assert.Equal(t, true, output.called)
 }
 
-func ExampleComputerHandleIncorrect(t *testing.T) {
+func TestComputerHandleIncorrect(t *testing.T) {
 	expression := ""
 	secondTest := strings.NewReader(expression)
 	output := outputTest{}
