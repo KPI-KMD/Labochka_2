@@ -7,23 +7,24 @@ import (
 	"strings"
 )
 
-func EvaluatePostfix(input string) (int, error) {
+// EvaluatePostfix is function for calculation postfix notation
+func EvaluatePostfix(input string) (float64, error) {
 
-	evaluateOperators := map[string]func(int, int) int{
-		"+": func(x, y int) int {
-			return x + y
+	evaluateOperators := map[string]func(float64, float64) float64{
+		"+": func(arg1, arg2 float64) float64 {
+			return arg1 + arg2
 		},
-		"-": func(x, y int) int {
-			return x - y
+		"-": func(arg1, arg2 float64) float64 {
+			return arg1 - arg2
 		},
-		"*": func(x, y int) int {
-			return x * y
+		"*": func(arg1, arg2 float64) float64 {
+			return arg1 * arg2
 		},
-		"/": func(x, y int) int {
-			return x / y
+		"/": func(arg1, arg2 float64) float64 {
+			return arg1 / arg2
 		},
-		"^": func(x, y int) int {
-			return int(math.Pow(float64(x), float64(y)))
+		"^": func(arg1, arg2 float64) float64 {
+			return math.Pow(arg1, arg2)
 		},
 	}
 
@@ -32,7 +33,7 @@ func EvaluatePostfix(input string) (int, error) {
 	}
 
 	stringArray := strings.Fields(input)
-	var stack []int
+	var stack []float64
 
 	for _, token := range stringArray {
 		if operators, consist := evaluateOperators[token]; consist {
@@ -43,7 +44,7 @@ func EvaluatePostfix(input string) (int, error) {
 			stack = stack[:len(stack)-2]
 			stack = append(stack, operators(arg1, arg2))
 		} else {
-			val, err := strconv.Atoi(token)
+			val, err := strconv.ParseFloat(token, 64)
 			if err != nil {
 				return 0, err
 			}
@@ -52,7 +53,7 @@ func EvaluatePostfix(input string) (int, error) {
 	}
 
 	if len(stack) != 1 {
-		return -1, errors.New("Stack corrupted")
+		return 0, errors.New("Stack corrupted")
 	}
 
 	return stack[len(stack)-1], nil
